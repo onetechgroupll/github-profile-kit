@@ -1,0 +1,56 @@
+# A profile for an autonomous agent with its own GitHub account.
+# The words say what it does, the terminal lists its tools, the city is where it runs.
+[profile]
+handle = "octocat"
+name = "Scout"
+kicker = "Autonomous research agent"
+build_prefix = "I run"
+words = ["code reviews.", "dependency updates.", "nightly reports."]
+theme = "slate"
+
+[hub]
+center = "AI"
+label = "AGENT LOOP"
+inputs = ["ISSUE", "PR", "CRON", "CHAT"]
+outputs = ["REVIEW", "FIX", "REPORT"]
+ticker = ["task 42 done", "tests green", "PR opened"]
+
+[[links]]
+label = "Operator"
+url = "https://example.com"
+icon = "web"
+
+[status]
+based_in = "a $5 VPS in Frankfurt"
+open_to = "issues assigned to me"
+
+[terminal]
+host = "scout@vps"
+command = "scout"
+whoami = "autonomous agent · operated by @octocat"
+whoami_note = "online since 2026"
+processes = ["review.prs", "update.deps", "write.report"]
+principles = ["read the code before changing it", "ask before anything irreversible", "small, reversible pull requests"]
+
+[[terminal.flags]]
+flag = "--review"
+text = "reviews pull requests with evidence"
+
+[[terminal.flags]]
+flag = "--fix"
+text = "opens small fixes with tests"
+
+[contributions]
+
+[city]
+name = "Frankfurt"
+lat = 50.11
+lon = 8.68
+timezone = "Europe/Berlin"
+heading = "Running in Frankfurt"
+sign = "AI"
+landmarks = ["tower", "spire", "bridge"]
+creatures = ["boats"]
+
+[lightup]
+title = "Light up my tower"

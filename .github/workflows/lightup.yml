@@ -1,0 +1,63 @@
+name: light up
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: lightup
+  cancel-in-progress: false
+
+jobs:
+  light:
+    if: github.event.repository.name == github.repository_owner && startsWith(github.event.issue.title, 'light:')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # Untrusted input goes only through env vars and is validated in Python against a fixed colour list.
+      - id: lu
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+        run: python3 -m profilekit lightup >> "$GITHUB_OUTPUT"
+
+      - name: Commit the new colour and rebuild
+        if: steps.lu.outputs.result == 'ok'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COLOR: ${{ steps.lu.outputs.color }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/lightup.json
+          git commit -m "lit $COLOR via #$NUM"
+          git pull --rebase
+          git push
+          gh workflow run profile.yml
+
+      - name: Thank and close
+        if: steps.lu.outputs.result == 'ok'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUM: ${{ github.event.issue.number }}
+          COLOR: ${{ steps.lu.outputs.color }}
+        run: |
+          gh issue comment "$NUM" --body "Thank you! The skyline now glows **$COLOR**. It shows up on the profile within a few minutes."
+          gh issue close "$NUM"
+
+      - name: Close invalid requests
+        if: steps.lu.outputs.result != 'ok'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NUM" --body "Unknown colour. Use one of the links on the profile: blue, red, green, purple, orange, pink or gold."
+          gh issue close "$NUM" --reason "not planned"

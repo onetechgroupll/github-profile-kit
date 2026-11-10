@@ -1,0 +1,528 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/onetechgroupll/github-profile-kit/profile.schema.json",
+  "title": "GitHub Profile Kit configuration (profile.toml)",
+  "description": "Everything the kit renders comes from this file. Only [profile].handle and [profile].name are required; every other table is optional and switches its section on.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile"
+  ],
+  "properties": {
+    "sections": {
+      "description": "Order of the README sections. Omit to use the default order; a section without data is skipped.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "header",
+          "contact",
+          "focus",
+          "org",
+          "terminal",
+          "recommend",
+          "contributions",
+          "city",
+          "lightup"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "handle",
+        "name"
+      ],
+      "properties": {
+        "handle": {
+          "description": "GitHub login. Used for live stats and image URLs.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$"
+        },
+        "name": {
+          "description": "Display name in the header.",
+          "type": "string",
+          "maxLength": 28
+        },
+        "kicker": {
+          "description": "Small caps line above the name, e.g. 'FOUNDER & CTO · ACME'.",
+          "type": "string",
+          "maxLength": 60
+        },
+        "build_prefix": {
+          "description": "Lead-in before the rotating words.",
+          "type": "string",
+          "maxLength": 14,
+          "default": "I build"
+        },
+        "words": {
+          "description": "Rotating words after the lead-in. End each with a period for the typed look.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 24
+          },
+          "minItems": 1,
+          "maxItems": 6
+        },
+        "theme": {
+          "description": "Colour theme: ink (neutral greys, violet accent) or slate (cool blue-greys, teal accent).",
+          "enum": [
+            "ink",
+            "slate"
+          ],
+          "default": "ink"
+        },
+        "accent": {
+          "description": "Optional accent colour (hex) that re-tints the theme.",
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "repo": {
+          "description": "owner/name of the profile repository. Defaults to handle/handle.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]+/[A-Za-z0-9._-]+$"
+        },
+        "credit": {
+          "description": "Small 'Built with github-profile-kit' line at the bottom.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "hub": {
+      "description": "Animated network graphic on the right of the header: inputs flow into a hub, outputs flow out.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "center": {
+          "type": "string",
+          "maxLength": 5,
+          "description": "Text inside the hub circle, e.g. your company initials."
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 14,
+          "description": "Small caps label under the hub."
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 6
+          },
+          "maxItems": 4,
+          "description": "Up to four nodes on the left that flow into the hub (blue packets)."
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 9
+          },
+          "maxItems": 3,
+          "description": "Up to three nodes on the right that the hub feeds (green packets)."
+        },
+        "ticker": {
+          "description": "Short values cycling under the hub, e.g. 'p95 12ms'.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "maxItems": 6
+        }
+      }
+    },
+    "links": {
+      "description": "Buttons in the contact row.",
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "url"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 22,
+            "description": "Button text."
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://",
+            "description": "Link target; https only."
+          },
+          "icon": {
+            "enum": [
+              "web",
+              "linkedin",
+              "github",
+              "x",
+              "mastodon",
+              "bluesky",
+              "mail",
+              "rss"
+            ],
+            "default": "web",
+            "description": "Icon drawn left of the label."
+          }
+        }
+      }
+    },
+    "status": {
+      "description": "Pills next to the buttons.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "based_in": {
+          "type": "string",
+          "maxLength": 28,
+          "description": "Shown as 'BASED IN <value>'."
+        },
+        "open_to": {
+          "type": "string",
+          "maxLength": 44,
+          "description": "Shown as 'OPEN TO <value>', e.g. 'collaborations · talent'."
+        }
+      }
+    },
+    "focus": {
+      "description": "Up to four cards with an animated visual each.",
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 22,
+            "description": "Card title."
+          },
+          "line1": {
+            "type": "string",
+            "maxLength": 32,
+            "description": "First line under the title."
+          },
+          "line2": {
+            "type": "string",
+            "maxLength": 32,
+            "description": "Second line under the title."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 10
+            },
+            "maxItems": 3,
+            "description": "Small chips at the bottom of the card."
+          },
+          "visual": {
+            "description": "auction = bidders racing, retail = shelf to screen to receipt, sync = phones in lockstep, ledger = scrolling ledger with sparkline.",
+            "enum": [
+              "auction",
+              "retail",
+              "sync",
+              "ledger"
+            ]
+          }
+        }
+      }
+    },
+    "org": {
+      "description": "A wide card linking to a company or organisation.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "url"
+      ],
+      "properties": {
+        "kicker": {
+          "type": "string",
+          "maxLength": 20,
+          "default": "BUILDING",
+          "description": "Small caps line above the name."
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 32,
+          "description": "Organisation name."
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "One line under the name."
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://",
+          "description": "Where the card links to; also printed on the card."
+        }
+      }
+    },
+    "terminal": {
+      "description": "A typed terminal session: whoami, --help flags, live processes, principles.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host": {
+          "description": "Window title, e.g. 'ada@engine'.",
+          "type": "string",
+          "maxLength": 30
+        },
+        "command": {
+          "description": "Command name used for '<command> --help'.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,15}$"
+        },
+        "whoami": {
+          "type": "string",
+          "maxLength": 48,
+          "description": "Output of 'whoami'."
+        },
+        "whoami_note": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "Muted text after the whoami line, e.g. 'shipping since 2012'."
+        },
+        "flags": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "flag",
+              "text"
+            ],
+            "properties": {
+              "flag": {
+                "type": "string",
+                "pattern": "^--[a-z][a-z0-9-]{0,9}$",
+                "description": "The flag, e.g. '--build'."
+              },
+              "text": {
+                "type": "string",
+                "maxLength": 52,
+                "description": "What the flag stands for."
+              }
+            }
+          },
+          "description": "Rows of '<command> --help'. Each flag describes one of your roles."
+        },
+        "processes": {
+          "description": "Shown in 'top' with live load bars.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "maxItems": 6
+        },
+        "principles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "maxItems": 5,
+          "description": "Output of 'cat ./principles'. The first one is highlighted."
+        }
+      }
+    },
+    "recommend": {
+      "description": "Open-source projects you recommend. Language and stars are fetched live.",
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repo"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9-]+/[A-Za-z0-9._-]+$",
+            "description": "owner/name on GitHub."
+          },
+          "tag": {
+            "type": "string",
+            "maxLength": 14,
+            "description": "Small chip in the top right, e.g. 'CLI'."
+          },
+          "line1": {
+            "type": "string",
+            "maxLength": 48,
+            "description": "First description line. Falls back to the repository description."
+          },
+          "line2": {
+            "type": "string",
+            "maxLength": 48,
+            "description": "Second description line."
+          }
+        }
+      }
+    },
+    "contributions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stats": {
+          "description": "Tiles + monthly bars.",
+          "type": "boolean",
+          "default": true
+        },
+        "settle": {
+          "description": "Calendar that settles into weekly bars.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "city": {
+      "description": "The living skyline: time of day and weather come live from Open-Meteo for lat/lon.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "lat",
+        "lon"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 24,
+          "description": "City name, printed top left and used as the seed of the procedural skyline."
+        },
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Latitude for weather and sunrise/sunset."
+        },
+        "lon": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Longitude for weather and sunrise/sunset."
+        },
+        "timezone": {
+          "description": "IANA name, e.g. Europe/Berlin.",
+          "type": "string",
+          "default": "UTC"
+        },
+        "heading": {
+          "description": "Heading above the skyline.",
+          "type": "string",
+          "maxLength": 60
+        },
+        "preset": {
+          "description": "generic = procedural city, seeded by the city name, with the landmarks below. Hand-drawn city presets can be added in profilekit/skyline.py.",
+          "enum": [
+            "generic"
+          ],
+          "default": "generic"
+        },
+        "sign": {
+          "description": "Up to 3 letters on a glowing rooftop sign.",
+          "type": "string",
+          "maxLength": 3
+        },
+        "landmarks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "tower",
+              "bridge",
+              "spire",
+              "wheel",
+              "dome"
+            ]
+          },
+          "description": "Landmarks placed into the procedural city: tower (TV tower, the light-up target), bridge (cable-stayed, right side), spire, wheel (rotating ferris wheel), dome."
+        },
+        "river": {
+          "type": "boolean",
+          "default": true,
+          "description": "Draw a river with waves; false draws plain ground."
+        },
+        "creatures": {
+          "description": "Things swimming in the river.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "boats",
+              "crocodile",
+              "duck"
+            ]
+          }
+        },
+        "flag": {
+          "description": "A small waving flag on a rooftop.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 4,
+              "description": "Up to 4 characters on the flag."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$",
+              "description": "Flag colour (hex). Defaults to red."
+            }
+          }
+        },
+        "seasons": {
+          "description": "Seasonal decorations that switch on automatically.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "newyear",
+              "advent",
+              "christmas",
+              "karneval",
+              "hoppeditz"
+            ]
+          }
+        }
+      }
+    },
+    "lightup": {
+      "description": "Visitors open an issue 'light: <colour>' and the tower (or sign) lights up in that colour with their handle.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Turn the light-up game on or off."
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 40,
+          "default": "Light up the tower",
+          "description": "Bold line above the colour links."
+        }
+      }
+    }
+  }
+}

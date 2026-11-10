@@ -1,0 +1,13 @@
+# github-profile-kit
+
+> Animated, living GitHub profile README generated from one profile.toml by a dependency-free Python 3.11 CLI and a GitHub Action.
+
+- [Agent procedure (SKILL.md)](skills/github-profile/SKILL.md): end-to-end steps to create or update a profile, including consent rules
+- [AGENTS.md](AGENTS.md): repository rules for coding agents
+- [Config schema](profilekit/schema.json): every key, allowed value and length limit
+- [Example config](profilekit/example.toml): all features switched on
+- CLI: `python3 -m profilekit [--json] init|validate|build|preview|schema|doctor`
+- [Config reference](docs/reference-config.md): every key as tables, generated from the schema
+- [CLI reference](docs/reference-cli.md): commands, options, JSON output, exit codes
+- [Workflow reference](docs/reference-workflows.md): what runs when, permissions, branches
+- [Tutorial](docs/tutorial-your-first-profile.md) · [Docs index](docs/README.md)

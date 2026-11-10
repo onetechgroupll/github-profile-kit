@@ -1,0 +1,122 @@
+# profile.toml: the only file you edit. Schema with every key and limit: profilekit/schema.json
+# (or `python3 -m profilekit schema`). Delete any table you do not want; its section disappears.
+
+# Order of the sections on the profile (optional).
+sections = ["header", "contact", "focus", "org", "terminal", "recommend", "contributions", "city", "lightup"]
+
+[profile]
+handle = "octocat"                      # your GitHub login
+name = "Mona Octocat"
+kicker = "Founder & CTO · Example Labs"
+build_prefix = "I build"
+words = ["developer tools.", "data pipelines.", "mobile apps."]
+theme = "ink"                           # ink | slate
+# accent = "#7c3aed"                    # optional: re-tint the theme
+
+[hub]                                   # animated network in the header (optional)
+center = "LAB"
+label = "PLATFORM"
+inputs = ["API", "CLI", "WEB", "APP"]
+outputs = ["TEAM·A", "TEAM·B", "TEAM·C"]
+ticker = ["p95 12ms", "p95 9ms", "p95 14ms", "p95 11ms"]
+
+[[links]]
+label = "Website"
+url = "https://example.com"
+icon = "web"                            # web linkedin github x mastodon bluesky mail rss
+
+[[links]]
+label = "LinkedIn"
+url = "https://www.linkedin.com/in/example"
+icon = "linkedin"
+
+[status]
+based_in = "Berlin"
+open_to = "collaborations · talent"
+
+[[focus]]
+title = "Developer Tools"
+line1 = "CLIs and SDKs that feel"
+line2 = "obvious on day one."
+tags = ["CLI", "SDK"]
+visual = "auction"                      # auction retail sync ledger
+
+[[focus]]
+title = "Data Pipelines"
+line1 = "From raw events"
+line2 = "to answers people trust."
+tags = ["ETL", "SQL"]
+visual = "retail"
+
+[[focus]]
+title = "Mobile Apps"
+line1 = "Native apps that stay"
+line2 = "in sync across devices."
+tags = ["iOS", "SYNC"]
+visual = "sync"
+
+[[focus]]
+title = "Payments"
+line1 = "Money flows that"
+line2 = "reconcile themselves."
+tags = ["BILLING"]
+visual = "ledger"
+
+[org]
+kicker = "BUILDING"
+name = "Example Labs"
+tagline = "Tools for teams that ship."
+url = "https://github.com/github"
+
+[terminal]
+host = "mona@lab"
+command = "mona"
+whoami = "founder & cto @ example labs"
+whoami_note = "shipping since 2012"
+processes = ["product.ship", "team.lead", "code.review", "infra.scale"]
+principles = ["measure before you optimise", "small diffs, fast feedback", "done = works in production"]
+
+[[terminal.flags]]
+flag = "--build"
+text = "writes and ships own software"
+
+[[terminal.flags]]
+flag = "--lead"
+text = "leads teams and developers"
+
+[[terminal.flags]]
+flag = "--product"
+text = "from problem to shipped product"
+
+[[recommend]]
+repo = "cli/cli"
+tag = "CLI"
+line1 = "GitHub on the command line:"
+line2 = "pull requests, issues and more."
+
+[[recommend]]
+repo = "astral-sh/uv"
+tag = "PYTHON"
+line1 = "An extremely fast Python package"
+line2 = "and project manager."
+
+[contributions]
+stats = true
+settle = true
+
+[city]
+name = "Berlin"
+lat = 52.52
+lon = 13.405
+timezone = "Europe/Berlin"
+heading = "Based in Berlin"
+preset = "generic"                      # procedural city from the name + landmarks
+sign = "MO"                             # up to 3 letters on a rooftop sign
+landmarks = ["tower", "dome", "wheel", "bridge"]   # tower bridge spire wheel dome
+river = true
+creatures = ["boats", "duck"]           # boats crocodile duck
+seasons = ["newyear", "advent", "christmas"]
+
+[lightup]
+enabled = true
+title = "Light up the tower"

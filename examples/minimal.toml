@@ -1,0 +1,13 @@
+# The smallest useful profile: header, contribution stats and a living skyline.
+[profile]
+handle = "octocat"
+name = "Mona Octocat"
+words = ["open source.", "tiny tools."]
+
+[contributions]
+
+[city]
+name = "Hamburg"
+lat = 53.55
+lon = 9.99
+timezone = "Europe/Berlin"
